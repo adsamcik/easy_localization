@@ -1,19 +1,16 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:easy_localization/src/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:easy_localization/src/widgets.dart';
+import 'package:intl/intl_standalone.dart'
+    if (dart.library.html) 'package:intl/intl_browser.dart';
 
-import 'widgets.dart';
 import 'asset_loader.dart';
 import 'localization.dart';
 import 'translations.dart';
-
-//If web then import intl_browser else intl_standalone
-import 'package:intl/intl_standalone.dart'
-    if (dart.library.html) 'package:intl/intl_browser.dart';
+import 'widgets.dart';
 
 part 'bloc/easy_localization_bloc.dart';
 part 'utils.dart';
@@ -188,11 +185,7 @@ class _EasyLocalizationState extends State<EasyLocalization> {
   }
 
   Future<Locale> loadSavedLocale() async {
-    final _preferences = await SharedPreferences.getInstance();
-    final _strLocale = _preferences.getString('locale');
-    final locale = _strLocale != null ? localeFromString(_strLocale) : null;
-
-    return locale;
+    return null;
   }
 
   @override
@@ -283,18 +276,10 @@ class _EasyLocalizationProvider extends InheritedWidget {
     }
   }
 
-  void _saveLocale(Locale locale) async {
-    final _preferences = await SharedPreferences.getInstance();
-    await _preferences.setString('locale', locale.toString());
-    log('Locale saved ${locale.toString()}', name: 'Easy Localization');
-  }
+  void _saveLocale(Locale locale) async {}
 
   /// Clears a saved locale from device storage
-  void deleteSaveLocale() async {
-    final _preferences = await SharedPreferences.getInstance();
-    await _preferences.setString('locale', null);
-    log('Saved locale deleted', name: 'Easy Localization');
-  }
+  void deleteSaveLocale() async {}
 
   @override
   bool updateShouldNotify(_EasyLocalizationProvider oldWidget) {
